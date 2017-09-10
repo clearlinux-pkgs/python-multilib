@@ -4,12 +4,13 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 1
-URL      : https://pypi.python.org/packages/b3/80/4634cb9962b2fcfb37c9f80c9a99a9e8dc2b0c0db7f6d055cb31d8b5dedf/python-multilib-1.2.tar.gz
-Source0  : https://pypi.python.org/packages/b3/80/4634cb9962b2fcfb37c9f80c9a99a9e8dc2b0c0db7f6d055cb31d8b5dedf/python-multilib-1.2.tar.gz
+Release  : 2
+URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
+Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
 Group    : Development/Tools
 License  : GPL-2.0
+Requires: python-multilib-legacypython
 Requires: python-multilib-python
 Requires: six
 BuildRequires : pbr
@@ -23,9 +24,18 @@ BuildRequires : six
 # python-multilib
 A Python library for determining if a package is multilib or not
 
+%package legacypython
+Summary: legacypython components for the python-multilib package.
+Group: Default
+
+%description legacypython
+legacypython components for the python-multilib package.
+
+
 %package python
 Summary: python components for the python-multilib package.
 Group: Default
+Requires: python-multilib-legacypython
 
 %description python
 python components for the python-multilib package.
@@ -39,12 +49,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1499652119
+export SOURCE_DATE_EPOCH=1505058609
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1499652119
+export SOURCE_DATE_EPOCH=1505058609
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -55,7 +65,10 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files python
+%defattr(-,root,root,-)
 /usr/lib/python3*/*
