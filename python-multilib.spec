@@ -4,13 +4,14 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 2
+Release  : 3
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: python-multilib-legacypython
+Requires: python-multilib-python3
 Requires: python-multilib-python
 Requires: six
 BuildRequires : pbr
@@ -27,6 +28,7 @@ A Python library for determining if a package is multilib or not
 %package legacypython
 Summary: legacypython components for the python-multilib package.
 Group: Default
+Requires: python-core
 
 %description legacypython
 legacypython components for the python-multilib package.
@@ -36,9 +38,19 @@ legacypython components for the python-multilib package.
 Summary: python components for the python-multilib package.
 Group: Default
 Requires: python-multilib-legacypython
+Requires: python-multilib-python3
 
 %description python
 python components for the python-multilib package.
+
+
+%package python3
+Summary: python3 components for the python-multilib package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the python-multilib package.
 
 
 %prep
@@ -49,12 +61,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505058609
+export SOURCE_DATE_EPOCH=1507170308
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1505058609
+export SOURCE_DATE_EPOCH=1507170308
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -70,5 +82,8 @@ echo ----[ mark ]----
 /usr/lib/python2*/*
 
 %files python
+%defattr(-,root,root,-)
+
+%files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
