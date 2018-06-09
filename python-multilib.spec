@@ -4,13 +4,12 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 9
+Release  : 10
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: python-multilib-legacypython
 Requires: python-multilib-python3
 Requires: python-multilib-python
 Requires: six
@@ -19,6 +18,7 @@ BuildRequires : pip
 BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
+BuildRequires : setuptools-legacypython
 BuildRequires : six
 
 %description
@@ -37,7 +37,6 @@ legacypython components for the python-multilib package.
 %package python
 Summary: python components for the python-multilib package.
 Group: Default
-Requires: python-multilib-legacypython
 Requires: python-multilib-python3
 
 %description python
@@ -61,12 +60,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507170308
+export SOURCE_DATE_EPOCH=1528574677
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1507170308
+export SOURCE_DATE_EPOCH=1528574677
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
