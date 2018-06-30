@@ -4,18 +4,20 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 13
+Release  : 14
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: python-multilib-python3
+Requires: python-multilib-license
 Requires: python-multilib-python
 Requires: six
 BuildRequires : pbr
 BuildRequires : pip
-
+BuildRequires : python-core
+BuildRequires : python3-core
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : setuptools-legacypython
@@ -32,6 +34,14 @@ Requires: python-core
 
 %description legacypython
 legacypython components for the python-multilib package.
+
+
+%package license
+Summary: license components for the python-multilib package.
+Group: Default
+
+%description license
+license components for the python-multilib package.
 
 
 %package python
@@ -60,13 +70,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1528574677
+export SOURCE_DATE_EPOCH=1530376792
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1528574677
+export SOURCE_DATE_EPOCH=1530376792
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/python-multilib
+cp LICENSE %{buildroot}/usr/share/doc/python-multilib/LICENSE
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 echo ----[ mark ]----
@@ -79,6 +91,10 @@ echo ----[ mark ]----
 %files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/python-multilib/LICENSE
 
 %files python
 %defattr(-,root,root,-)
