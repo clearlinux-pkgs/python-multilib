@@ -4,7 +4,7 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 11
+Release  : 12
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
