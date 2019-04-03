@@ -4,37 +4,23 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 23
+Release  : 24
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: python-multilib-python3
-Requires: python-multilib-license
-Requires: python-multilib-python
+Requires: python-multilib-license = %{version}-%{release}
+Requires: python-multilib-python = %{version}-%{release}
+Requires: python-multilib-python3 = %{version}-%{release}
 Requires: six
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python-core
-BuildRequires : python3-core
-BuildRequires : python3-dev
-BuildRequires : setuptools
+BuildRequires : buildreq-distutils3
 BuildRequires : setuptools-legacypython
 BuildRequires : six
 
 %description
 # python-multilib
 A Python library for determining if a package is multilib or not
-
-%package legacypython
-Summary: legacypython components for the python-multilib package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the python-multilib package.
-
 
 %package license
 Summary: license components for the python-multilib package.
@@ -47,7 +33,7 @@ license components for the python-multilib package.
 %package python
 Summary: python components for the python-multilib package.
 Group: Default
-Requires: python-multilib-python3
+Requires: python-multilib-python3 = %{version}-%{release}
 
 %description python
 python components for the python-multilib package.
@@ -70,17 +56,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530376792
-python2 setup.py build -b py2
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1554327205
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %install
-export SOURCE_DATE_EPOCH=1530376792
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/python-multilib
-cp LICENSE %{buildroot}/usr/share/doc/python-multilib/LICENSE
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+mkdir -p %{buildroot}/usr/share/package-licenses/python-multilib
+cp LICENSE %{buildroot}/usr/share/package-licenses/python-multilib/LICENSE
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -88,13 +73,9 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
-
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/python-multilib/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/python-multilib/LICENSE
 
 %files python
 %defattr(-,root,root,-)
