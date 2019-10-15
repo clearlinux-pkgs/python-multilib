@@ -4,7 +4,7 @@
 #
 Name     : python-multilib
 Version  : 1.2
-Release  : 26
+Release  : 27
 URL      : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Source0  : http://pypi.debian.net/python-multilib/python-multilib-1.2.tar.gz
 Summary  : module for determining if a package is multilib
@@ -15,7 +15,6 @@ Requires: python-multilib-python = %{version}-%{release}
 Requires: python-multilib-python3 = %{version}-%{release}
 Requires: six
 BuildRequires : buildreq-distutils3
-BuildRequires : setuptools-legacypython
 BuildRequires : six
 
 %description
@@ -55,8 +54,13 @@ python3 components for the python-multilib package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1554327205
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1571158093
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -64,7 +68,7 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/python-multilib
-cp LICENSE %{buildroot}/usr/share/package-licenses/python-multilib/LICENSE
+cp %{_builddir}/python-multilib-1.2/LICENSE %{buildroot}/usr/share/package-licenses/python-multilib/2f7458fd0e7cb17d3e9393379f3eb3434c91a978
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -75,7 +79,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/python-multilib/LICENSE
+/usr/share/package-licenses/python-multilib/2f7458fd0e7cb17d3e9393379f3eb3434c91a978
 
 %files python
 %defattr(-,root,root,-)
