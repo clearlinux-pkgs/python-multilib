@@ -4,7 +4,7 @@
 #
 Name     : python-multilib
 Version  : 1.3
-Release  : 31
+Release  : 32
 URL      : https://files.pythonhosted.org/packages/7b/04/4b874882aba1fb4fe505e8d1e2b136cbd25a07944ba919d3f7ee0915851e/python-multilib-1.3.tar.gz
 Source0  : https://files.pythonhosted.org/packages/7b/04/4b874882aba1fb4fe505e8d1e2b136cbd25a07944ba919d3f7ee0915851e/python-multilib-1.3.tar.gz
 Summary  : module for determining if a package is multilib
@@ -42,7 +42,8 @@ python components for the python-multilib package.
 Summary: python3 components for the python-multilib package.
 Group: Default
 Requires: python3-core
-Provides: pypi(python-multilib)
+Provides: pypi(python_multilib)
+Requires: pypi(six)
 
 %description python3
 python3 components for the python-multilib package.
@@ -57,8 +58,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583213479
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583541665
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
